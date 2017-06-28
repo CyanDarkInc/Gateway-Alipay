@@ -118,10 +118,10 @@ class Alipay extends NonmerchantGateway
     {
         // Verify meta data is valid
         $rules = [
-            'merchant_account' => [
+            'merchant_email' => [
                 'valid' => [
                     'rule' => ['isEmail', false],
-                    'message' => Language::_('Alipay.!error.merchant_account.valid', true)
+                    'message' => Language::_('Alipay.!error.merchant_email.valid', true)
                 ]
             ],
             'merchant_uid'=>[

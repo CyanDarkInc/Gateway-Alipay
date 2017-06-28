@@ -2,7 +2,7 @@
 
 // Main
 $lang['Alipay.name'] = 'Alipay';
-$lang['Alipay.merchant_account'] = 'Merchant Account';
+$lang['Alipay.merchant_email'] = 'Merchant Email';
 $lang['Alipay.merchant_uid'] = 'Merchant UID/PID';
 $lang['Alipay.signature_key'] = 'Signature Key';
 $lang['Alipay.dev_mode'] = 'Developer Mode';
@@ -10,6 +10,6 @@ $lang['Alipay.dev_mode_note'] = 'Enabling this option will post transactions to 
 $lang['Alipay.buildprocess.submit'] = 'Pay with Alipay';
 
 // Errors
-$lang['Alipay.!error.merchant_account.valid'] = 'You must enter a valid email address.';
+$lang['Alipay.!error.merchant_email.valid'] = 'You must enter a valid email address.';
 $lang['Alipay.!error.merchant_uid.valid'] = 'You must enter a valid Merchant UID/PID.';
 $lang['Alipay.!error.signature_key.valid'] = 'You must enter a valid signature key.';

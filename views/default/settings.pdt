@@ -1,8 +1,8 @@
 <ul>
 	<li>
 		<?php
-            $this->Form->label($this->_('Alipay.merchant_account', true), 'merchant_account');
-            $this->Form->fieldText('merchant_account', $this->Html->ifSet($meta['merchant_account']), ['id'=>'merchant_account']);
+            $this->Form->label($this->_('Alipay.merchant_email', true), 'merchant_email');
+            $this->Form->fieldText('merchant_email', $this->Html->ifSet($meta['merchant_email']), ['id'=>'merchant_email']);
         ?>
 	</li>
 	<li>
