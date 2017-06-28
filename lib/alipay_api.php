@@ -64,9 +64,8 @@ class AlipayApi
      * Initializes the class.
      *
      * @param string $partner The merchant UID/PID
-     * @param string $sign The signature key
-     * @param mixed $sign_key
-     * @param mixed $dev_mode
+     * @param string $sign_key The signature key
+     * @param bool $dev_mode True to enable the sandbox API
      */
     public function __construct($partner, $sign_key, $dev_mode = false)
     {
