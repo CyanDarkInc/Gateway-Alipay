@@ -1,4 +1,4 @@
-# Alipay Module
+# Alipay Gateway
 
 A Blesta gateway that integrates with [Alipay](https://global.alipay.com/).
 
