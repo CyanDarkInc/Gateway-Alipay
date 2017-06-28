@@ -1,6 +1,6 @@
 <?php
 /**
- * Alipay Gateway
+ * Alipay Gateway.
  *
  * The Alipay API documentation can be found at:
  * https://global.alipay.com/service/website_split/1/
@@ -27,9 +27,9 @@ class Alipay extends NonmerchantGateway
      * @var array An array of meta data for this gateway
      */
     private $meta;
-    
+
     /**
-     * Construct a new merchant gateway
+     * Construct a new merchant gateway.
      */
     public function __construct()
     {
@@ -41,7 +41,7 @@ class Alipay extends NonmerchantGateway
     }
 
     /**
-     * Returns the name of this gateway
+     * Returns the name of this gateway.
      *
      * @return string The common name of this gateway
      */
@@ -51,7 +51,7 @@ class Alipay extends NonmerchantGateway
     }
 
     /**
-     * Returns the version of this gateway
+     * Returns the version of this gateway.
      *
      * @return string The current version of this gateway
      */
@@ -61,7 +61,7 @@ class Alipay extends NonmerchantGateway
     }
 
     /**
-     * Returns the name and URL for the authors of this gateway
+     * Returns the name and URL for the authors of this gateway.
      *
      * @return array The name and URL of the authors of this gateway
      */
@@ -71,7 +71,7 @@ class Alipay extends NonmerchantGateway
     }
 
     /**
-     * Return all currencies supported by this gateway
+     * Return all currencies supported by this gateway.
      *
      * @return array A numerically indexed array containing all currency codes (ISO 4217 format) this gateway supports
      */
@@ -81,7 +81,7 @@ class Alipay extends NonmerchantGateway
     }
 
     /**
-     * Sets the currency code to be used for all subsequent payments
+     * Sets the currency code to be used for all subsequent payments.
      *
      * @param string $currency The ISO 4217 currency code to be used for subsequent payments
      */
@@ -91,7 +91,7 @@ class Alipay extends NonmerchantGateway
     }
 
     /**
-     * Create and return the view content required to modify the settings of this gateway
+     * Create and return the view content required to modify the settings of this gateway.
      *
      * @param array $meta An array of meta (settings) data belonging to this gateway
      * @return string HTML content containing the fields to update the meta data for this gateway
@@ -109,7 +109,7 @@ class Alipay extends NonmerchantGateway
     }
 
     /**
-     * Validates the given meta (settings) data to be updated for this gateway
+     * Validates the given meta (settings) data to be updated for this gateway.
      *
      * @param array $meta An array of meta (settings) data to be updated for this gateway
      * @return array The meta data to be updated in the database for this gateway, or reset into the form on failure
@@ -155,7 +155,7 @@ class Alipay extends NonmerchantGateway
     }
 
     /**
-     * Returns an array of all fields to encrypt when storing in the database
+     * Returns an array of all fields to encrypt when storing in the database.
      *
      * @return array An array of the field names to encrypt when storing in the database
      */
@@ -165,7 +165,7 @@ class Alipay extends NonmerchantGateway
     }
 
     /**
-     * Sets the meta data for this particular gateway
+     * Sets the meta data for this particular gateway.
      *
      * @param array $meta An array of meta data to set for this gateway
      */
@@ -175,7 +175,7 @@ class Alipay extends NonmerchantGateway
     }
 
     /**
-     * Returns all HTML markup required to render an authorization and capture payment form
+     * Returns all HTML markup required to render an authorization and capture payment form.
      *
      * @param array $contact_info An array of contact info including:
      *  - id The contact ID
@@ -259,7 +259,7 @@ class Alipay extends NonmerchantGateway
             $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($request), 'output', false);
 
             return null;
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $this->Input->setErrors(
                 ['internal' => ['response' => $e->getMessage()]]
             );
@@ -267,7 +267,7 @@ class Alipay extends NonmerchantGateway
     }
 
     /**
-     * Builds the HTML form
+     * Builds the HTML form.
      *
      * @param string $post_to The URL to post to
      * @param array $fields An array of key/value input fields to set in the form
@@ -488,7 +488,7 @@ class Alipay extends NonmerchantGateway
     }
 
     /**
-     * Serializes an array of invoice info into a string
+     * Serializes an array of invoice info into a string.
      *
      * @param array A numerically indexed array invoices info including:
      *  - id The ID of the invoice
@@ -501,13 +501,15 @@ class Alipay extends NonmerchantGateway
         foreach ($invoices as $i => $invoice) {
             $str .= ($i > 0 ? '|' : '') . $invoice['id'] . '=' . $invoice['amount'];
         }
+
         return $str;
     }
 
     /**
-     * Unserializes a string of invoice info into an array
+     * Unserializes a string of invoice info into an array.
      *
      * @param string A serialized string of invoice info in the format of key1=value1|key2=value2
+     * @param mixed $str
      * @return array A numerically indexed array invoices info including:
      *  - id The ID of the invoice
      *  - amount The amount relating to the invoice
@@ -523,6 +525,7 @@ class Alipay extends NonmerchantGateway
             }
             $invoices[] = ['id' => $pairs[0], 'amount' => $pairs[1]];
         }
+
         return $invoices;
     }
 }
