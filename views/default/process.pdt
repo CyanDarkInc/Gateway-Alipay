@@ -13,4 +13,3 @@
 
     $this->Form->fieldButton('sign', $this->_('Alipay.buildprocess.submit', true), ['type' => 'submit', 'class' => 'btn btn-info', 'value' => $signature]);
     $this->Form->end();
-?>

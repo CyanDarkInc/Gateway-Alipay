@@ -64,7 +64,8 @@ class AlipayApi
      * Initializes the class.
      *
      * @param string $partner The merchant UID/PID
-     * @param string $sign The signature key
+     * @param string $sign_key The signature key
+     * @param bool $dev_mode True to enable the sandbox API
      */
     public function __construct($partner, $sign_key, $dev_mode = false)
     {
@@ -155,7 +156,7 @@ class AlipayApi
     }
 
     /**
-     * Builds an array with the HTTP headers of the response
+     * Builds an array with the HTTP headers of the response.
      *
      * @param $data Raw Alipay API response
      * @return array An array containing the HTTP headers
@@ -215,7 +216,7 @@ class AlipayApi
 
         // Parse plain response
         if (strpos($headers['content-type'], 'text/plain') !== false) {
-            return trim(explode("secure;", $data, 2)[1]);
+            return trim(explode('secure;', $data, 2)[1]);
         }
 
         return null;
@@ -279,6 +280,6 @@ class AlipayApi
     {
         $response = $this->apiRequest('notify_verify', ['notify_id' => $notify_id]);
 
-        return (strpos($response['response'], 'true') !== false);
+        return strpos($response['response'], 'true') !== false;
     }
 }
