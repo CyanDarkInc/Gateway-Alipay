@@ -1,4 +1,5 @@
 <?php
+
 // Main
 $lang['Alipay.name'] = 'Alipay';
 $lang['Alipay.merchant_account'] = 'Merchant Account';
