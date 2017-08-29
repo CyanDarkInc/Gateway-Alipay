@@ -247,16 +247,18 @@ class Alipay extends NonmerchantGateway
         ];
         $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($fields), 'input', true);
 
-        // Build payment request
+        // Send the request to the api
         $request = $api->requestPayment($fields);
 
+        // Build the payment form
         try {
             if (isset($request['headers']['location'])) {
                 $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($request), 'output', true);
 
                 return $this->buildForm($request['url'], $request['params']);
+            } else {
+                $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($request), 'output', false);
             }
-            $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($request), 'output', false);
 
             return null;
         } catch (Exception $e) {
