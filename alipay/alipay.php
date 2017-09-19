@@ -7,7 +7,7 @@
  *
  * @package blesta
  * @subpackage blesta.components.gateways.alipay
- * @copyright Copyright (c) 2010, Phillips Data, Inc.
+ * @copyright Copyright (c) 2017, Phillips Data, Inc.
  * @license http://www.blesta.com/license/ The Blesta License Agreement
  * @link http://www.blesta.com/ Blesta
  */
@@ -21,7 +21,7 @@ class Alipay extends NonmerchantGateway
     /**
      * @var string The authors of this gateway
      */
-    private static $authors = [['name'=>'Phillips Data, Inc.','url'=>'http://www.blesta.com']];
+    private static $authors = [['name' => 'Phillips Data, Inc.','url' => 'http://www.blesta.com']];
 
     /**
      * @var array An array of meta data for this gateway
@@ -124,18 +124,18 @@ class Alipay extends NonmerchantGateway
                     'message' => Language::_('Alipay.!error.merchant_email.valid', true)
                 ]
             ],
-            'merchant_uid'=>[
-                'valid'=>[
-                    'rule'=>'isEmpty',
+            'merchant_uid' => [
+                'valid' => [
+                    'rule' => 'isEmpty',
                     'negate' => true,
-                    'message'=>Language::_('Alipay.!error.merchant_uid.valid', true)
+                    'message' => Language::_('Alipay.!error.merchant_uid.valid', true)
                 ]
             ],
-            'signature_key'=>[
-                'valid'=>[
-                    'rule'=>'isEmpty',
+            'signature_key' => [
+                'valid' => [
+                    'rule' => 'isEmpty',
                     'negate' => true,
-                    'message'=>Language::_('Alipay.!error.signature_key.valid', true)
+                    'message' => Language::_('Alipay.!error.signature_key.valid', true)
                 ]
             ]
         ];
@@ -247,18 +247,16 @@ class Alipay extends NonmerchantGateway
         ];
         $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($fields), 'input', true);
 
-        // Send the request to the api
+        // Build payment request
         $request = $api->requestPayment($fields);
 
-        // Build the payment form
         try {
             if (isset($request['headers']['location'])) {
                 $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($request), 'output', true);
 
                 return $this->buildForm($request['url'], $request['params']);
-            } else {
-                $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($request), 'output', false);
             }
+            $this->log($this->ifSet($_SERVER['REQUEST_URI']), serialize($request), 'output', false);
 
             return null;
         } catch (Exception $e) {
@@ -318,11 +316,13 @@ class Alipay extends NonmerchantGateway
         Loader::load(dirname(__FILE__) . DS . 'lib' . DS . 'alipay_api.php');
         $api = new AlipayApi($this->meta['merchant_uid'], $this->meta['signature_key'], $this->meta['dev_mode']);
 
+        $data_parts = explode('@', $post['out_trade_no'], 2);
+
         // Get client id
-        $client_id = explode('@', $post['out_trade_no'], 2)[0];
+        $client_id = $data_parts[0];
 
         // Get invoices
-        $invoices = $this->ifSet(explode('@', $post['out_trade_no'], 2)[1]);
+        $invoices = $this->ifSet($data_parts[1]);
         if (is_numeric($invoices)) {
             $invoices = null;
         }
@@ -389,11 +389,13 @@ class Alipay extends NonmerchantGateway
      */
     public function success(array $get, array $post)
     {
+        $data_parts = explode('@', $get['out_trade_no'], 2);
+
         // Get client id
-        $client_id = explode('@', $get['out_trade_no'], 2)[0];
+        $client_id = $data_parts[0];
 
         // Get invoices
-        $invoices = $this->ifSet(explode('@', $get['out_trade_no'], 2)[1]);
+        $invoices = $this->ifSet($data_parts[1]);
         if (is_numeric($invoices)) {
             $invoices = null;
         }
@@ -510,8 +512,7 @@ class Alipay extends NonmerchantGateway
     /**
      * Unserializes a string of invoice info into an array.
      *
-     * @param string A serialized string of invoice info in the format of key1=value1|key2=value2
-     * @param mixed $str
+     * @param string $str A serialized string of invoice info in the format of key1=value1|key2=value2
      * @return array A numerically indexed array invoices info including:
      *  - id The ID of the invoice
      *  - amount The amount relating to the invoice

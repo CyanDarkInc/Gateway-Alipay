@@ -117,7 +117,11 @@ class AlipayApi
         // Validate response
         if (strpos($data, 'ILLEGAL_') !== false) {
             $error = trim('ILLEGAL_' . explode("\n", explode('ILLEGAL_', strip_tags($data), 2)[1], 2)[0]);
-            throw new Exception((isset($this->errors[$error]) ? $this->errors[$error] : 'An internal error occurred, or the server did not respond to the request.'));
+            throw new Exception(
+                (isset($this->errors[$error])
+                    ? $this->errors[$error]
+                    : 'An internal error occurred, or the server did not respond to the request.')
+            );
         }
 
         return [
@@ -205,7 +209,11 @@ class AlipayApi
             }
 
             if (isset($result['error'])) {
-                $result['error_msg'] = (isset($this->errors[$result['error']]) ? $this->errors[$result['error']] : 'An internal error occurred, or the server did not respond to the request.');
+                $result['error_msg'] = (
+                    isset($this->errors[$result['error']])
+                        ? $this->errors[$result['error']]
+                        : 'An internal error occurred, or the server did not respond to the request.'
+                );
             }
             if (isset($result['is_success'])) {
                 $result['is_success'] = ($result['is_success'] == 'T' ? true : false);
